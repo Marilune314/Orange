@@ -26,9 +26,6 @@ ListView{
                     if (window.isValid) {
                         _player.startPreviewWindow(window);
                     }
-                    调用player预览
-                    //_player.startPreviewWindow(window);
-                    //chooseWindow(window);
 
                 }
     }

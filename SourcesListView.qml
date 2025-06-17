@@ -3,14 +3,16 @@ import QtQuick.Controls
 import QtQuick.Layouts
 Item{
     property int chooseType
+    //存储我所捕获的窗口
+    property list<var> windowLists
     ColumnLayout{
         anchors.fill:parent
-
+        //标签
         Label{
             text:"Sources"
             Layout.alignment: Qt.AlignTop
         }
-
+        //列表
         ListView{
             id:_scourseListVeiw
             Layout.fillWidth:true
@@ -24,11 +26,13 @@ Item{
                     text:model.name
                     color:"black"
                 }
+                onClicked:{
+                    showPreview(index)
+                }
             }
         }
-
+        //工具栏
         ToolBar{
-
             Layout.alignment: Qt.AlignBottom
             Row{
                 ToolButton{action:add_actions.add}
@@ -36,10 +40,11 @@ Item{
             }
         }
     }
+    //列表数据
     ListModel{
         id:listModel
     }
-
+    //上下文菜单
     Actions{
         id:add_actions
         screenCapture.onTriggered: {
@@ -51,23 +56,24 @@ Item{
             loderNewCapture.source="NewWindow.qml"
         }
     }
-
+    //加载NewWindow.qml
     Loader{
         id:loderNewCapture
         onLoaded: {
-            item.chooseType=chooseType
-            // listModel.append({"name":item.deviceName})
-            // loderNewCapture.source=""
-            item.deviceName.connect(function(name){
-                listModel.append({"name":name})
-                loderNewCapture.source=""
-            }
-                )
-            // if(chooseType===2){
-            //     _mainplayer.startPreviewWindow(item.chooseWindow)
-            // }
+            item.chooseType = chooseType
+            item.completed.connect(function(deviceName, capturedWindow) {
+                        listModel.append({"name": deviceName});
+                        windowLists.push(capturedWindow);
+                        loderNewCapture.source = ""
+                    })
+
+
 
         }
 
     }
+    function showPreview(index){
+        _mainplayer.startPreviewWindow(windowLists[index])
+    }
 }
+

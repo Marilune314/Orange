@@ -19,9 +19,10 @@ qt_add_qml_module(appOrange
     QML_FILES Content.qml
     QML_FILES Player.qml
     QML_FILES SourcesListView.qml
-    QML_FILES ToolButtonListView.qml
-    QML_FILES WindowListView.qml
+    QML_FILES SetWindow.qml
+    QML_FILES ToolButtonListView.qml WindowListView.qml
     SOURCES windowlistmodel.h windowlistmodel.cpp
+    QML_FILES NewWindow.qml
 )
 
 target_compile_features(appOrange PRIVATE cxx_std_23)
