@@ -4,7 +4,7 @@ project(Orange VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick)
+find_package(Qt6 REQUIRED COMPONENTS Quick Multimedia Gui)
 
 qt_standard_project_setup(REQUIRES 6.9)
 
@@ -20,6 +20,8 @@ qt_add_qml_module(appOrange
     QML_FILES Player.qml
     QML_FILES SourcesListView.qml
     QML_FILES ToolButtonListView.qml
+    QML_FILES WindowListView.qml
+    SOURCES windowlistmodel.h windowlistmodel.cpp
 )
 
 target_compile_features(appOrange PRIVATE cxx_std_23)
@@ -27,6 +29,8 @@ target_compile_features(appOrange PRIVATE cxx_std_23)
 target_link_libraries(appOrange
     PRIVATE
         Qt6::Quick
+        Qt6::Multimedia
+        Qt6::Gui
 )
 
 set_target_properties(appOrange PROPERTIES
