@@ -32,6 +32,7 @@ Item{
             Layout.alignment: Qt.AlignBottom
             Row{
                 ToolButton{action:add_actions.add}
+                ToolButton{action:add_actions.remove}
             }
         }
     }
@@ -41,18 +42,12 @@ Item{
 
     Actions{
         id:add_actions
-        displayCapture.onTriggered: {
+        screenCapture.onTriggered: {
             chooseType=1
             loderNewCapture.source="NewWindow.qml"
         }
         windowCapture.onTriggered: {
             chooseType=2
-            loderNewCapture.source="NewWindow.qml"
-        }
-        audioInputCapture.onTriggered: {
-            loderNewCapture.source="NewWindow.qml"
-        }
-        audioOutputCapture.onTriggered: {
             loderNewCapture.source="NewWindow.qml"
         }
     }

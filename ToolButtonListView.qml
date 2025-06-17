@@ -36,6 +36,6 @@ ColumnLayout{
         Layout.fillWidth:true
         Layout.fillHeight:true
         text:"Exit"
-        onClicked: Qt.quit
+        onClicked: Qt.exit(0)
     }
 }

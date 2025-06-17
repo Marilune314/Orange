@@ -17,7 +17,7 @@ Item {
         windowCapture:WindowCapture{id:windowCapture;active:false}
         audioInput:AudioInput{id:audioInput}
         videoOutput:_videoOutput
-        recorder: null
+        recorder:null
     }
     VideoOutput{
         id:_videoOutput
