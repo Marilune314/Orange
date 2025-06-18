@@ -66,6 +66,9 @@ ApplicationWindow{
         about.onTriggered: {
             content.dialogs.aboutDialog.open()
         }
+        show.onTriggered: {
+            content.dialogs.openDialog.open()
+        }
     }
 
     Content{
@@ -80,6 +83,12 @@ ApplicationWindow{
             showFooterMessage=true
             recording = false
             recordTimer.stop()
-     }
-}
+        }
+        dialogs.openDialog.onAccepted: {
+            var path=content.dialogs.openDialog.selectedFile.toString().replace("file://","");
+            console.log(path);
+            localPlayer.startPlay("ffplay",path)
+        }
+
+    }
 }

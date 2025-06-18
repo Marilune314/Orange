@@ -1,12 +1,14 @@
 import QtQuick
 import QtQuick.Controls
 import QtCore
+import Orange 1.0
 import "Controller.js" as Controller
 Item{
     property alias player:_mainplayer
     property alias sourcesListView:_sourcesListView
     property alias toolButtonListView: _toolButtonListView
     property  alias dialogs:_dialogs
+    property alias localPlayer:_localPlayer
     property string path:""
     SplitView{
         id:sv
@@ -49,6 +51,10 @@ Item{
     }
     Dialogs{
         id:_dialogs
+    }
+
+    LocalPlayer{
+       id:_localPlayer
     }
 
 }

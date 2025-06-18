@@ -1,8 +1,16 @@
 import QtQuick
 import QtQuick.Dialogs
+import QtCore
 Item{
     property alias aboutDialog:_aboutDialog
     property alias checkSourceDialog:_checkSourceDialog
+    property alias openDialog :_openDialog
+    FileDialog{
+        id:_openDialog
+        currentFolder:StandardPaths.standardLocations(StandardPaths.DocumentsLocation)[0]
+        fileMode: FileDialog.OpenFile
+        nameFilters:[("Video files (*.srt *.mkv *.avi *mp4)")]
+    }
     MessageDialog{
         id:_aboutDialog
         modality: Qt.WindowModal
