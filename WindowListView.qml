@@ -5,13 +5,14 @@ import QtQuick.Layouts
 ListView{
     //在listview中被选中的项的window窗口
     property var window
-    id:_windowlistVeiw
+    id:_windowlistView
     model:WindowListModel{}
     cacheBuffer:100
     delegate:
         Rectangle{
             width: _windowListView.width
             height:20
+            color: ListView.isCurrentItem ? "light blue" : "white"
         Text{
             anchors.margins: 4
             width:100
@@ -20,6 +21,7 @@ ListView{
             }
             TapHandler{
                 onTapped:{
+                    _windowListView.currentIndex=index
                     // 获取当前点击的窗口对象
                     window = _windowListView.model.getWindow(index);
                     // 调用 Player 的预览方法
@@ -28,6 +30,20 @@ ListView{
                     }
 
                 }
+            }
+        }
+    TapHandler {
+        acceptedButtons: Qt.RightButton
+        onTapped: {
+            updatewindow.popup();
+        }
     }
-}
+    Menu{
+        id:updatewindow
+        MenuItem{
+            text:"UpdateWindow"
+            onTriggered:model.populate()
+        }
+
+    }
 }

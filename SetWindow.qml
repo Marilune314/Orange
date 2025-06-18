@@ -8,6 +8,10 @@ ApplicationWindow {
     height:480
     visible:true
     title:qsTr("Set window")
+    Item{
+        anchors.fill: parent
+        focus:true
+        Keys.onReturnPressed: okButton.clicked()
     SplitView{
         id:sv
         anchors.fill:parent
@@ -37,13 +41,16 @@ ApplicationWindow {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 5  // 设置按钮间距
                 Button {
+                    id:okButton
                     text: qsTr("OK")
                     //直接让我listview中选择好的屏幕可以传给newwindow调用窗口
                     onClicked:windowSelected(_windowListView.window)}
                 Button {
                     text: qsTr("Cancel")
-                }
+                    onClicked: close();
+                                }
             }
         }
      }
+}
 }

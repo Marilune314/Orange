@@ -75,9 +75,14 @@ ApplicationWindow{
         id:content
         anchors.fill:parent
         toolButtonListView.startButton.onClicked:{
-            recording = true
-            elapsedSeconds = 0
-            recordTimer.start()
+            if (content.tryStartRecording()) {
+                recording = true;
+                elapsedSeconds = 0;
+                recordTimer.start();
+            }
+            // recording=false
+            // recordTimer.stop()
+
         }
         toolButtonListView.stopButton.onClicked: {
             showFooterMessage=true
@@ -91,4 +96,6 @@ ApplicationWindow{
         }
 
     }
+
+
 }

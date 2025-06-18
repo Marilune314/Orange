@@ -8,6 +8,10 @@ ApplicationWindow {
     height:480
     visible:true
     title:qsTr("Set screen")
+    Item {
+        anchors.fill: parent
+        focus: true
+        Keys.onReturnPressed: okButton.clicked()
     SplitView{
         id:sv
         anchors.fill:parent
@@ -38,13 +42,16 @@ ApplicationWindow {
               spacing: 5
 
               Button {
+                  id:okButton
                   text: qsTr("OK")
                   onClicked: screenSelected(_screenListView.targetScreen)
               }
               Button {
-                  text: qsTr("Cancel")
-              }
+                text: qsTr("Cancel");
+                onClicked: close()
+            }
           }
       }
     }
+}
 }
