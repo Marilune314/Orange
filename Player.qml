@@ -2,13 +2,18 @@ import QtQuick
 import QtMultimedia
 import QtQuick.Window
 Item {
-    //anchors.fill:parent
     property alias captureSession:_captureSession
-
     function startPreviewWindow(capturableWindow) {
+            screenCapture.active=false
             windowCapture.active = false
             windowCapture.window = capturableWindow;
             windowCapture.active = true;  // 激活捕获
+    }
+    function startPreviewScreen(capturableScreen) {
+            windowCapture.active=false
+            screenCapture.active = false
+            screenCapture.screen = capturableScreen;
+            screenCapture.active = true;  // 激活捕获
     }
 
     CaptureSession{
@@ -17,7 +22,7 @@ Item {
         windowCapture:WindowCapture{id:windowCapture;active:false}
         audioInput:AudioInput{id:audioInput}
         videoOutput:_videoOutput
-        recorder:null
+        recorder: null
     }
     VideoOutput{
         id:_videoOutput

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.31)
+cmake_minimum_required(VERSION 3.30)
 
 project(Orange VERSION 0.1 LANGUAGES CXX)
 
@@ -23,6 +23,9 @@ qt_add_qml_module(appOrange
     QML_FILES ToolButtonListView.qml WindowListView.qml
     SOURCES windowlistmodel.h windowlistmodel.cpp
     QML_FILES NewWindow.qml
+    SOURCES screenlistmodel.h screenlistmodel.cpp
+    QML_FILES ScreenListView.qml
+    QML_FILES SetScreen.qml
 )
 
 target_compile_features(appOrange PRIVATE cxx_std_23)
