@@ -7,6 +7,7 @@ ApplicationWindow {
     width:600
     height:480
     visible:true
+    title:qsTr("Set screen")
     SplitView{
         id:sv
         anchors.fill:parent

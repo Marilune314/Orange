@@ -8,14 +8,7 @@ Item {
     property alias remove: _remove
     property alias screenCapture:_screenCapture
     property alias windowCapture:_windowCapture
-    MessageDialog{
-        id:_aboutDialog
-        modality: Qt.WindowModal
-        buttons:MessageDialog.Ok
-        text:"This is a simple screen recorder."
-        informativeText: qsTr("Orange is a free software, and you can download its source code from www.open-src.com")
-        detailedText: "Copyright©2025 HuJunxin WangXinru YangJiayi"
-    }
+
 
     Action{
         id:_show
@@ -26,9 +19,7 @@ Item {
         id:_about
         icon.name:"help-about"
         text:"About"
-        onTriggered: {
-            _aboutDialog.open()
-        }
+
     }
     Action{
         id:_add

@@ -26,6 +26,8 @@ qt_add_qml_module(appOrange
     SOURCES screenlistmodel.h screenlistmodel.cpp
     QML_FILES ScreenListView.qml
     QML_FILES SetScreen.qml
+    QML_FILES Controller.js
+    QML_FILES Dialogs.qml
 )
 
 target_compile_features(appOrange PRIVATE cxx_std_23)

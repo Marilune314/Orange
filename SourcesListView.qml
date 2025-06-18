@@ -1,8 +1,10 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import "Controller.js" as Controller
 Item{
     property int chooseType
+    property alias listModel:listModel
     //存储我所捕获的窗口
     property list<var>captureLists
     ColumnLayout{
@@ -18,6 +20,7 @@ Item{
             Layout.fillWidth:true
             Layout.fillHeight:true
             implicitWidth:300
+            visible: listModel.count===0?false:true
             model:listModel
             delegate:Button{
                 width:_sourceListView.width
@@ -28,8 +31,20 @@ Item{
                 }
                 onClicked:{
                     _sourceListView.currentIndex=index;
-                    showPreview(index)
+                    Controller.showPreview(index)
                 }
+            }
+        }
+        Rectangle{
+            id:_placeHold
+            Layout.fillWidth:true
+            Layout.fillHeight:true
+            implicitWidth:300
+            visible: _sourceListView.visible?false:true
+            Text {
+
+                anchors.centerIn: parent
+                text: qsTr("no exist source\nplease click '+'")
             }
         }
         //工具栏
@@ -85,21 +100,7 @@ Item{
 
     }
 
-    function showPreview(index) {
-        if (index >= 0 && index <captureLists.length) {
-            var item =captureLists[index]
-            switch(item.type) {
-            case "screen":
-                _mainplayer.startPreviewScreen(item.data)
-                break
-            case "window":
-                _mainplayer.startPreviewWindow(item.data)
-                break
-            default:
-                console.error("unknown type:", item.type)
-            }
-        }
-    }
+
 
 }
 

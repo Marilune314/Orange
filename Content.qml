@@ -1,10 +1,13 @@
 import QtQuick
 import QtQuick.Controls
-
+import QtCore
+import "Controller.js" as Controller
 Item{
     property alias player:_mainplayer
     property alias sourcesListView:_sourcesListView
     property alias toolButtonListView: _toolButtonListView
+    property  alias dialogs:_dialogs
+    property string path:""
     SplitView{
         id:sv
         anchors.fill:parent
@@ -29,12 +32,13 @@ Item{
                   SplitView.preferredWidth:parent.width/2
                   //动态创建recorder对象
                   startButton.onClicked:{
-                  var recorder = Qt.createQmlObject('import QtMultimedia 6.0; MediaRecorder {}',
-                                                       _mainplayer.captureSession,
-                                                       "dynamicRecorder");
-                  recorder.outputLocation="file:///root/recording.mp4";
-                  _mainplayer.captureSession.recorder = recorder;
-                  _mainplayer.captureSession.recorder.record();
+                      if(_sourcesListView.listModel.count===0){
+                          _dialogs.checkSourceDialog.open()
+                      }else{
+                          path=Controller.startButton()
+                      }
+
+
                }
                pauseButton.onClicked: _mainplayer.captureSession.recorder.pause()
                stopButton.onClicked:_mainplayer.captureSession.recorder.stop();
@@ -43,7 +47,8 @@ Item{
 
         }
     }
-
-
+    Dialogs{
+        id:_dialogs
+    }
 
 }

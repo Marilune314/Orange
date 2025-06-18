@@ -2,10 +2,15 @@ import QtQuick
 import QtQuick.Controls
 
 ApplicationWindow{
-    id:winodw
+    property bool recording: false
+    property int elapsedSeconds: 0
+    property string timeString: "00:00:00"
+    property bool showFooterMessage: false
+    id:winodw    
     width:640
     height:480
     visible:true
+    title:qsTr("Orange")
     menuBar:MenuBar{
         Menu{
             id:file
@@ -18,16 +23,63 @@ ApplicationWindow{
             MenuItem{action:actions.about}
         }
     }
-    // footer:ToolBar{
-    // }
+    footer:ToolBar{
+        Text {
+            visible: showFooterMessage
+            anchors.left:parent.left
+            text: content.path
+            color: "grey"
+        }
+
+        Timer {
+            id:showpathtimer
+            running: showFooterMessage
+            interval: 2000
+            repeat: false
+            onTriggered: showFooterMessage = false
+        }
+        Timer {
+               id: recordTimer
+               interval: 1000
+               repeat: true
+               onTriggered: {
+                   elapsedSeconds += 1
+                   var h = Math.floor(elapsedSeconds / 3600)
+                   var m = Math.floor((elapsedSeconds % 3600) / 60)
+                   var s = elapsedSeconds % 60
+                    timeString =
+                           String(h).padStart(2, "0") + ":" +
+                           String(m).padStart(2, "0") + ":" +
+                           String(s).padStart(2, "0");
+               }
+           }
+        Text {
+                text: recording ? "Recording:" + timeString : "Ready"
+                color:"grey"
+                font.pixelSize: 18
+                anchors.right:parent.right
+               }
+    }
 
     Actions{
         id:actions
-
+        about.onTriggered: {
+            content.dialogs.aboutDialog.open()
+        }
     }
 
     Content{
         id:content
         anchors.fill:parent
-    }
+        toolButtonListView.startButton.onClicked:{
+            recording = true
+            elapsedSeconds = 0
+            recordTimer.start()
+        }
+        toolButtonListView.stopButton.onClicked: {
+            showFooterMessage=true
+            recording = false
+            recordTimer.stop()
+     }
+}
 }

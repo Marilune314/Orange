@@ -7,7 +7,7 @@ ApplicationWindow{
     id:root
     visible: true
     width: 300;height:280
-
+    title: qsTr("Create or select source")
     ColumnLayout{
 
         ColumnLayout{

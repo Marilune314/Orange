@@ -1,8 +1,10 @@
 import QtQuick
 import QtMultimedia
 import QtQuick.Window
+
 Item {
     property alias captureSession:_captureSession
+
     function startPreviewWindow(capturableWindow) {
             screenCapture.active=false
             windowCapture.active = false
