@@ -14,8 +14,7 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const override;
     Q_INVOKABLE QCapturableWindow getWindow(int index);
-
-    void populate();
+    Q_INVOKABLE void populate();
 
 private:
     QList<QCapturableWindow> windowList;

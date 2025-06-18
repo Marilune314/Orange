@@ -1,10 +1,11 @@
 import QtQuick
 import QtMultimedia
 import QtQuick.Window
+import QtQuick.Dialogs
 
 Item {
     property alias captureSession:_captureSession
-
+    property string errorinfo
     function startPreviewWindow(capturableWindow) {
             screenCapture.active=false
             windowCapture.active = false
@@ -21,7 +22,17 @@ Item {
     CaptureSession{
         id:_captureSession
         screenCapture:ScreenCapture{id:screenCapture;active:false}
-        windowCapture:WindowCapture{id:windowCapture;active:false}
+        windowCapture:WindowCapture{
+            id:windowCapture;
+            active:false;
+            onErrorChanged:{
+                if(windowCapture.error!==WindowCapture.NoError)
+                {
+                     errorinfo=errorString;
+                     _warning.open();
+                }
+            }
+        }
         audioInput:AudioInput{id:audioInput}
         videoOutput:_videoOutput
         recorder: null
@@ -29,6 +40,13 @@ Item {
     VideoOutput{
         id:_videoOutput
         anchors.fill:parent
+    }
+    MessageDialog{
+        id:_warning
+        modality: Qt.WindowModal
+        buttons:MessageDialog.Ok
+        text:"QScreenCapture: Error occurred"
+        informativeText:errorinfo
     }
 
 }

@@ -30,6 +30,20 @@ ListView{
                     }
 
                 }
+            }
+        }
+    TapHandler {
+        acceptedButtons: Qt.RightButton
+        onTapped: {
+            updatewindow.popup();
+        }
     }
-}
+    Menu{
+        id:updatewindow
+        MenuItem{
+            text:"UpdateWindow"
+            onTriggered:model.populate()
+        }
+
+    }
 }
