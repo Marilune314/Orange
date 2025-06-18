@@ -27,6 +27,7 @@ Item{
                     color:"black"
                 }
                 onClicked:{
+                    _sourceListView.currentIndex=index;
                     showPreview(index)
                 }
             }
