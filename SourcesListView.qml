@@ -4,23 +4,23 @@ import QtQuick.Layouts
 Item{
     property int chooseType
     //存储我所捕获的窗口
-    property list<var> windowLists
+    property list<var>captureLists
     ColumnLayout{
         anchors.fill:parent
         //标签
         Label{
-            text:"Sources"
+            text:"Sources:"
             Layout.alignment: Qt.AlignTop
         }
         //列表
         ListView{
-            id:_scourseListVeiw
+            id:_sourceListView
             Layout.fillWidth:true
             Layout.fillHeight:true
             implicitWidth:300
             model:listModel
             delegate:Button{
-                width:_scourseListVeiw.width
+                width:_sourceListView.width
                 Text{
                     anchors.centerIn: parent
                     text:model.name
@@ -49,22 +49,33 @@ Item{
         id:add_actions
         screenCapture.onTriggered: {
             chooseType=1
-            loderNewCapture.source="NewWindow.qml"
+            loadNewCapture.source="NewWindow.qml"
         }
         windowCapture.onTriggered: {
             chooseType=2
-            loderNewCapture.source="NewWindow.qml"
+            loadNewCapture.source="NewWindow.qml"
         }
+        remove.onTriggered: {
+            listModel.remove(_sourceListView.currentIndex,1)
+            captureLists.splice(_sourceListView.currentIndex,1)
+        }
+
     }
     //加载NewWindow.qml
     Loader{
-        id:loderNewCapture
+        id:loadNewCapture
         onLoaded: {
             item.chooseType = chooseType
-            item.completed.connect(function(deviceName, capturedWindow) {
-                        listModel.append({"name": deviceName});
-                        windowLists.push(capturedWindow);
-                        loderNewCapture.source = ""
+            item.completed.connect(function(deviceName, capturedItem) {
+                        listModel.append({
+                                             "name": deviceName,
+                                             "type": chooseType===1?"screen":"window"
+                                        });
+                       captureLists.push({
+                                            "data":capturedItem,
+                                            "type":chooseType===1?"screen":"window"
+                                        });
+                        loadNewCapture.source = ""
                     })
 
 
@@ -72,8 +83,22 @@ Item{
         }
 
     }
-    function showPreview(index){
-        _mainplayer.startPreviewWindow(windowLists[index])
+
+    function showPreview(index) {
+        if (index >= 0 && index <captureLists.length) {
+            var item =captureLists[index]
+            switch(item.type) {
+            case "screen":
+                _mainplayer.startPreviewScreen(item.data)
+                break
+            case "window":
+                _mainplayer.startPreviewWindow(item.data)
+                break
+            default:
+                console.error("unknown type:", item.type)
+            }
+        }
     }
+
 }
 

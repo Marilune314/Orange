@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 ApplicationWindow{
     property int chooseType
-    signal completed(string deviceName,var windowObj)
+    signal completed(string deviceName,var captureObj)
     id:root
     visible: true
     width: 300;height:280
@@ -52,12 +52,10 @@ ApplicationWindow{
                 onClicked: {
                     switch(chooseType){
                     case 1:
-                        //待实现
-                        // loaderScreenDevice.source="SetScreen.qml";
+                        loadScreenDevice.source="SetScreen.qml";
                         break;
                     case 2:
-                        loaderWindowDevice.source="SetWindow.qml"
-                        // console.log("load SetWidow.qml")
+                        loadWindowDevice.source="SetWindow.qml"
                         break;
                     default:
                         completed(_edit.text,null)
@@ -75,14 +73,17 @@ ApplicationWindow{
 
     }
     Loader{
-        id:loaderScreenDevice
+        id:loadScreenDevice
         onLoaded:{
-            //
+            item.screenSelected.connect(function(selectedScreen){
+                completed(_edit.text,selectedScreen);
+                close();
+            })
         }
     }
 
     Loader{
-        id:loaderWindowDevice
+        id:loadWindowDevice
         onLoaded: {
             item.windowSelected.connect(function(selectedWindow) {
                             completed(_edit.text, selectedWindow);
