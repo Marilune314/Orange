@@ -5,19 +5,19 @@ import QtQuick.Layouts
 ListView{
     //在listview中被选中的项的window窗口
     property var window
-    id:_windowlistVeiw
+    id:_windowlistView
     model:WindowListModel{}
     cacheBuffer:100
     delegate:
         Rectangle{
             width: _windowListView.width
             height:20
-        Text{
-            anchors.margins: 4
-            width:100
-            text:model.display
-            color: "black"
-            }
+            Text{
+                anchors.margins: 4
+                width:100
+                text:model.display
+                color: "black"
+                }
             TapHandler{
                 onTapped:{
                     // 获取当前点击的窗口对象
@@ -28,6 +28,20 @@ ListView{
                     }
 
                 }
+            }
+        }
+    TapHandler {
+        acceptedButtons: Qt.RightButton
+        onTapped: {
+            updatewindow.popup();
+        }
     }
-}
+    Menu{
+        id:updatewindow
+        MenuItem{
+            text:"UpdateWindow"
+            onTriggered:model.populate()
+        }
+
+    }
 }
