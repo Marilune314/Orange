@@ -11,7 +11,7 @@ Item{
         anchors.fill:parent
         //标签
         Label{
-            text:"Sources:"
+            text:"Sources: Click to preview"
             Layout.alignment: Qt.AlignTop
         }
         //列表
@@ -22,17 +22,22 @@ Item{
             implicitWidth:300
             visible: listModel.count===0?false:true
             model:listModel
-            delegate:Button{
+            delegate:
+                ItemDelegate{
+                property bool isCurrent: ListView.isCurrentItem
+
+                highlighted: isCurrent
                 width:_sourceListView.width
                 Text{
                     anchors.centerIn: parent
                     text:model.name
-                    color:"black"
+                    color:"light grey"
                 }
                 onClicked:{
                     _sourceListView.currentIndex=index;
                     Controller.showPreview(index)
                 }
+
             }
         }
         Rectangle{
@@ -92,7 +97,10 @@ Item{
                                             "type":chooseType===1?"screen":"window"
                                         });
                         loadNewCapture.source = ""
-                    })
+                    });
+            item.closing.connect(function() {
+                    loadNewCapture.source = ""
+                                })
 
 
 
@@ -103,4 +111,5 @@ Item{
 
 
 }
+
 

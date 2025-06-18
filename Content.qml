@@ -50,5 +50,13 @@ Item{
     Dialogs{
         id:_dialogs
     }
-
+    function tryStartRecording(): bool {
+        if (_sourcesListView.listModel.count === 0) {
+            _dialogs.checkSourceDialog.open();
+            return false;
+        } else {
+            path = Controller.startButton();
+            return true;
+        }
+    }
 }

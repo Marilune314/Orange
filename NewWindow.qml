@@ -8,6 +8,10 @@ ApplicationWindow{
     visible: true
     width: 300;height:280
     title: qsTr("Create or select source")
+    Item {
+        anchors.fill: parent
+        //focus: true
+        Keys.onReturnPressed: okButton.clicked()
     ColumnLayout{
 
         ColumnLayout{
@@ -23,6 +27,7 @@ ApplicationWindow{
                 Layout.fillWidth:true
                 Layout.leftMargin:5
                 Layout.rightMargin:5
+                focus:true
             }
         }
         ColumnLayout{
@@ -48,6 +53,7 @@ ApplicationWindow{
         RowLayout{
             Layout.alignment: Qt.AlignRight
             Button{
+                id:okButton
                 text:qsTr("Ok")
                 onClicked: {
                     switch(chooseType){
@@ -63,11 +69,12 @@ ApplicationWindow{
                 }
             }
             Button{
-                text:qsTr("Cancel")
-                onClicked: {
-                    root.visible=false;
-                }
-            }
+                  text:qsTr("Cancel")
+                  onClicked: {
+                  close();
+                            }
+
+                        }
 
         }
 
@@ -78,7 +85,10 @@ ApplicationWindow{
             item.screenSelected.connect(function(selectedScreen){
                 completed(_edit.text,selectedScreen);
                 close();
-            })
+            });
+            item.closing.connect(function() {
+                                    loadScreenDevice.source = ""
+                                })
         }
     }
 
@@ -88,8 +98,11 @@ ApplicationWindow{
             item.windowSelected.connect(function(selectedWindow) {
                             completed(_edit.text, selectedWindow);
                             close();
-                        })
+                        });
+            item.closing.connect(function() {
+                                    loadWindowDevice.source = ""
+                                })
         }
     }
-
+}
 }

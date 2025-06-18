@@ -42,8 +42,9 @@ ApplicationWindow {
                   onClicked: screenSelected(_screenListView.targetScreen)
               }
               Button {
-                  text: qsTr("Cancel")
-              }
+                text: qsTr("Cancel");
+                onClicked: close()
+            }
           }
       }
     }
