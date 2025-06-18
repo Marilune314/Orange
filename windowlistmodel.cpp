@@ -13,7 +13,6 @@ int WindowListModel::rowCount(const QModelIndex &parent) const
 
 QVariant WindowListModel::data(const QModelIndex &index, int role) const
 {
-    //if (!index.isValid() || index.row() <= windowList.size()) return QVariant();
     Q_ASSERT(index.isValid());
     Q_ASSERT(index.row() <= windowList.size());
     if (role == Qt::DisplayRole) {
@@ -28,10 +27,6 @@ QHash<int, QByteArray> WindowListModel::roleNames() const
     return {{Qt::DisplayRole, "display"}};
 }
 
-// QCapturableWindow WindowListModel::window(const QModelIndex &index)
-// {
-//     return windowList.at(index.row());
-// }
 QCapturableWindow WindowListModel::getWindow(int index)
 {
     return windowList.at(index);

@@ -23,6 +23,8 @@ qt_add_qml_module(appOrange
     QML_FILES ToolButtonListView.qml WindowListView.qml
     SOURCES windowlistmodel.h windowlistmodel.cpp
     QML_FILES NewWindow.qml
+    SOURCES screenlistmodel.h screenlistmodel.cpp
+    QML_FILES ScreenListView.qml
 )
 
 target_compile_features(appOrange PRIVATE cxx_std_23)
