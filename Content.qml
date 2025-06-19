@@ -39,10 +39,8 @@ Item{
                       }else{
                           path=Controller.startButton()
                       }
-
-
                }
-               pauseButton.onClicked: _mainplayer.captureSession.recorder.pause()
+               pauseButton.onClicked:{ _mainplayer.captureSession.recorder.pause();}
                stopButton.onClicked:_mainplayer.captureSession.recorder.stop();
 
             }

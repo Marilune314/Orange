@@ -6,7 +6,7 @@ Item{
     property int chooseType
     property alias listModel:listModel
     //存储我所捕获的窗口
-    property list<var>captureLists
+    property list<var> captureLists
     ColumnLayout{
         anchors.fill:parent
         //标签

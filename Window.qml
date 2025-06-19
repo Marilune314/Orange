@@ -24,17 +24,33 @@ ApplicationWindow{
         }
     }
     footer:ToolBar{
+        Text{
+            id:hintText
+            visible: pathText.visible
+            anchors.left: parent.left;
+            text:"Click to Play: "
+            color:Qt.styleHints.colorScheme === Qt.Light ? "black" : "white"
+
+        }
+
         Text {
+            id:pathText
             visible: showFooterMessage
-            anchors.left:parent.left
+            anchors.left:hintText.right
             text: content.path
-            color: "grey"
+            font.underline: true
+            color: "blue"
+            TapHandler{
+                onTapped:{
+                    content.localPlayer.startPlay("ffplay",pathText.text);
+                }
+            }
         }
 
         Timer {
             id:showpathtimer
             running: showFooterMessage
-            interval: 2000
+            interval: 10000
             repeat: false
             onTriggered: showFooterMessage = false
         }
@@ -80,8 +96,7 @@ ApplicationWindow{
                 elapsedSeconds = 0;
                 recordTimer.start();
             }
-            // recording=false
-            // recordTimer.stop()
+            showFooterMessage=false
 
         }
         toolButtonListView.stopButton.onClicked: {
