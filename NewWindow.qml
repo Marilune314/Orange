@@ -28,8 +28,14 @@ ApplicationWindow{
                 Layout.leftMargin:5
                 Layout.rightMargin:5
                 focus:true
+                Component.onCompleted:  {
+                           if (focus) {
+                               _edit.selectAll();
+                           }
+                    //_edit.selectAll();
+                       }
             }
-        }
+
         ColumnLayout{
             CheckBox{
                 enabled: newButton.checked?false:true
@@ -105,4 +111,5 @@ ApplicationWindow{
         }
     }
 }
-}
+}}
+
