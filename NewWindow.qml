@@ -17,26 +17,33 @@ ApplicationWindow{
         ColumnLayout{
             CheckBox{
                 id:newButton
-                enabled: checkBox.checked?false:true
+                checked:  checkBox.checked?false:true
                 text: qsTr("New")
                 }
             TextField{
                 id:_edit
-                enabled: newButton.enabled
+                enabled: newButton.checked
                 text:qsTr("New Device")
                 Layout.fillWidth:true
                 Layout.leftMargin:5
                 Layout.rightMargin:5
                 focus:true
+                Component.onCompleted:  {
+                           if (focus) {
+                               _edit.selectAll();
+                           }
+                    //_edit.selectAll();
+                       }
             }
-        }
+
         ColumnLayout{
             CheckBox{
-                enabled: newButton.checked?false:true
                 id:checkBox
+                checked: newButton.checked?false:true
                 text:qsTr("add existing...")
             }
             Rectangle{
+                enabled: checkBox.checked
                 implicitWidth:280
                 implicitHeight:100
                 Layout.leftMargin:5
@@ -47,6 +54,7 @@ ApplicationWindow{
                     }
             CheckBox{
                 text:qsTr("make source visible")
+                checked: true;
             }
 
         }
@@ -105,4 +113,5 @@ ApplicationWindow{
         }
     }
 }
-}
+}}
+

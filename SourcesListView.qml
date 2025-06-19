@@ -31,7 +31,7 @@ Item{
                 Text{
                     anchors.centerIn: parent
                     text:model.name
-                    color:Qt.darker("gray",3)
+                    color:Qt.styleHints.colorScheme === Qt.Light ? "black" : "white"
                 }
                 onClicked:{
                     _sourceListView.currentIndex=index;
