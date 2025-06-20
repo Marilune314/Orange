@@ -9,6 +9,7 @@ Item{
     property alias toolButtonListView: _toolButtonListView
     property  alias dialogs:_dialogs
     property alias localPlayer:_localPlayer
+    property alias fileHelper: _fileHelper
     property string path:""
     SplitView{
         id:sv
@@ -63,6 +64,9 @@ Item{
             path = Controller.startButton();
             return true;
         }
+    }
+    FileHelper{
+        id:_fileHelper
     }
 
 }

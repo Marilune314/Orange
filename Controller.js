@@ -15,8 +15,9 @@ function showPreview(index) {
 }
 
 function getOutputPath(fileName) {
-            var dir = StandardPaths.writableLocation(StandardPaths.MoviesLocation)
-            return dir+"/"+fileName
+            var dir = StandardPaths.writableLocation(StandardPaths.MoviesLocation)+"/ScreenCaptureFiles"
+            if(fileHelper.ensureDirExists(dir.toString().replace("file://","")))
+                return dir+"/"+fileName
 }
 function startButton(){
     var recorder = Qt.createQmlObject('import QtMultimedia 6.0; MediaRecorder {}',

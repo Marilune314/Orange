@@ -37,7 +37,7 @@ ApplicationWindow{
             id:pathText
             visible: showFooterMessage
             anchors.left:hintText.right
-            text: content.path
+            text: content.path.toString().replace("file://","")
             font.underline: true
             color: "blue"
             TapHandler{

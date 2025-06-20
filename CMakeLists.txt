@@ -29,6 +29,7 @@ qt_add_qml_module(appOrange
     QML_FILES Controller.js
     QML_FILES Dialogs.qml
     SOURCES localplayer.h localplayer.cpp
+    SOURCES filehelper.h filehelper.cpp
 )
 
 target_compile_features(appOrange PRIVATE cxx_std_23)
