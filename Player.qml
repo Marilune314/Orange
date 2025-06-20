@@ -48,5 +48,21 @@ Item {
         text:"QScreenCapture: Error occurred"
         informativeText:errorinfo
     }
+    Rectangle{
+        id:_placeHold
+        anchors.fill: parent
+        color:"black"
+        visible: (windowCapture.active || screenCapture.active)?false:true
+        Text {
+            anchors.centerIn: parent
+            text: qsTr("No preview available.\nClick a source to display.")
+            color: "gray"
+            font {
+                pixelSize: 24
+                italic: true
+                weight: Font.Normal
+            }
+        }
+    }
 
 }
