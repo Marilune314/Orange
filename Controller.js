@@ -25,6 +25,10 @@ function startButton(){
                                          "dynamicRecorder");
     var path=getOutputPath("Screen_Capture_" + Qt.formatDateTime(new Date(), "yyyyMMdd_hhmmss") + ".mp4");
     recorder.outputLocation=path;
+    recorder.videoBitRate =8000*1000
+    recorder.videoFrameRate=30
+    recorder.videoResolution ="1920x1080"
+    recorder.audioBitRate=128000
     player.captureSession.recorder = recorder;
     player.captureSession.recorder.record();
     return path;

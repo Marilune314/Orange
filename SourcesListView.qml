@@ -11,7 +11,7 @@ Item{
         anchors.fill:parent
         //标签
         Label{
-            text:"Sources: Click to preview"
+            text:"Sources"
             Layout.alignment: Qt.AlignTop
         }
         //列表
@@ -47,9 +47,12 @@ Item{
             implicitWidth:300
             visible: _sourceListView.visible?false:true
             Text {
-
                 anchors.centerIn: parent
-                text: qsTr("no exist source\nplease click '+'")
+                text: qsTr("No exist source\nplease click '+' below")
+                font{
+                    italic: true
+                    weight: Font.Normal
+                }
             }
         }
         //工具栏
