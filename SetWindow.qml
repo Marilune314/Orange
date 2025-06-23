@@ -3,7 +3,8 @@ import QtQuick.Controls
 import QtQuick.Layouts
 ApplicationWindow {
     id:setWinodw
-    signal windowSelected(var window)
+    signal windowSelected(var window,var window_id)
+
     width:600
     height:480
     visible:true
@@ -44,7 +45,7 @@ ApplicationWindow {
                     id:okButton
                     text: qsTr("OK")
                     //直接让我listview中选择好的屏幕可以传给newwindow调用窗口
-                    onClicked:windowSelected(_windowListView.window)}
+                    onClicked:windowSelected(_windowListView.window,_windowListView.window_id)}
                 Button {
                     text: qsTr("Cancel")
                     onClicked: close();

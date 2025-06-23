@@ -19,18 +19,9 @@ function getOutputPath(fileName) {
             if(fileHelper.ensureDirExists(dir.toString().replace("file://","")))
                 return dir+"/"+fileName
 }
-function startButton(){
-    var recorder = Qt.createQmlObject('import QtMultimedia 6.0; MediaRecorder {}',
-                                         player.captureSession,
-                                         "dynamicRecorder");
+function stopButton(){
     var path=getOutputPath("Screen_Capture_" + Qt.formatDateTime(new Date(), "yyyyMMdd_hhmmss") + ".mp4");
-    recorder.outputLocation=path;
-    recorder.videoBitRate =8000*1000
-    recorder.videoFrameRate=30
-    recorder.videoResolution ="1920x1080"
-    recorder.audioBitRate=128000
-    player.captureSession.recorder = recorder;
-    player.captureSession.recorder.record();
+    recorder.stopRecording(path);
     return path;
 }
 

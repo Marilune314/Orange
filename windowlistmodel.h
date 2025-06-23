@@ -13,9 +13,18 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const override;
+    void generateFile();
+    void readId();
     Q_INVOKABLE QCapturableWindow getWindow(int index);
     Q_INVOKABLE void populate();
 
+    enum Roles {
+        DisplayRole = Qt::DisplayRole,
+        WindowIdRole = Qt::UserRole + 1 // 新增角色
+    };
+    Q_ENUM(Roles);
+
 private:
     QList<QCapturableWindow> windowList;
+    QList<int> windowId;
 };

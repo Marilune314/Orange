@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 ApplicationWindow{
     property int chooseType
-    signal completed(string deviceName,var captureObj)
+    signal completed(string deviceName,var captureObj,var window_id)
     id:root
     visible: true
     width: 300;height:280
@@ -91,7 +91,7 @@ ApplicationWindow{
         id:loadScreenDevice
         onLoaded:{
             item.screenSelected.connect(function(selectedScreen){
-                completed(_edit.text,selectedScreen);
+                completed(_edit.text,selectedScreen,-1);
                 close();
             });
             item.closing.connect(function() {
@@ -103,8 +103,8 @@ ApplicationWindow{
     Loader{
         id:loadWindowDevice
         onLoaded: {
-            item.windowSelected.connect(function(selectedWindow) {
-                            completed(_edit.text, selectedWindow);
+            item.windowSelected.connect(function(selectedWindow,windowId) {
+                            completed(_edit.text, selectedWindow,windowId);
                             close();
                         });
             item.closing.connect(function() {
