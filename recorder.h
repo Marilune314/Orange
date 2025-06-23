@@ -1,0 +1,23 @@
+#pragma once
+
+#include <QObject>
+#include <QQmlEngine>
+#include <QProcess>
+class Recorder : public QObject
+{
+    Q_OBJECT
+    QML_ELEMENT
+public:
+    explicit Recorder(QObject *parent = nullptr);
+    Q_INVOKABLE void startRecording(QString id);
+
+    Q_INVOKABLE void pauseRecording();
+    Q_INVOKABLE void resumeRecording(QString id);
+    Q_INVOKABLE void stopRecording(const QString &finalPath);
+    // void generateFile();
+
+private:
+    QProcess *m_process;
+    QStringList m_parts;
+    int m_partIndex;
+};

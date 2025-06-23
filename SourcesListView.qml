@@ -5,6 +5,7 @@ import "Controller.js" as Controller
 Item{
     property int chooseType
     property alias listModel:listModel
+    property string windowId
     //存储我所捕获的窗口
     property list<var> captureLists
     ColumnLayout{
@@ -36,6 +37,7 @@ Item{
                 onClicked:{
                     _sourceListView.currentIndex=index;
                     Controller.showPreview(index)
+                    windowId=captureLists[index].windowId
                 }
 
             }
@@ -90,14 +92,15 @@ Item{
         id:loadNewCapture
         onLoaded: {
             item.chooseType = chooseType
-            item.completed.connect(function(deviceName, capturedItem) {
+            item.completed.connect(function(deviceName, capturedItem,windowId) {
                         listModel.append({
                                              "name": deviceName,
                                              "type": chooseType===1?"screen":"window"
                                         });
                        captureLists.push({
                                             "data":capturedItem,
-                                            "type":chooseType===1?"screen":"window"
+                                            "type":chooseType===1?"screen":"window",
+                                            "windowId":windowId
                                         });
                         loadNewCapture.source = ""
                     });

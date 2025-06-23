@@ -5,6 +5,7 @@ import QtQuick.Layouts
 ListView{
     //在listview中被选中的项的window窗口
     property var window
+    property var window_id
     id:_windowlistView
     model:WindowListModel{}
     cacheBuffer:100
@@ -28,7 +29,8 @@ ListView{
                     if (window.isValid) {
                         _player.startPreviewWindow(window);
                     }
-
+                    window_id="0x"+model.windowId.toString(16);
+                    // console.log(window_id)
                 }
             }
         }

@@ -20,7 +20,7 @@ ColumnLayout{
     }
     Button{
         id:_pause
-        enabled: false
+        // enabled: false
         Layout.fillWidth:true
         Layout.fillHeight:true
         text:"Pause Recording"

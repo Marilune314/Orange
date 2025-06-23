@@ -10,6 +10,7 @@ Item{
     property  alias dialogs:_dialogs
     property alias localPlayer:_localPlayer
     property alias fileHelper: _fileHelper
+    property alias recorder: _recorder
     property string path:""
     SplitView{
         id:sv
@@ -38,12 +39,14 @@ Item{
                       if(_sourcesListView.listModel.count===0){
                           _dialogs.checkSourceDialog.open()
                       }else{
-                          path=Controller.startButton()
+                          console.log(_sourcesListView.windowId)
+                          recorder.startRecording(_sourcesListView.windowId);
                       }
                }
-               pauseButton.onClicked:{ _mainplayer.captureSession.recorder.pause();}
-               stopButton.onClicked:_mainplayer.captureSession.recorder.stop();
-
+               pauseButton.onClicked:{ recorder.pauseRecording();}
+               pauseButton.onDoubleClicked: {recorder.resumeRecording(_sourcesListView.windowId);}
+               stopButton.onClicked:{
+                   path=Controller.stopButton()}
             }
 
         }
@@ -61,12 +64,14 @@ Item{
             _dialogs.checkSourceDialog.open();
             return false;
         } else {
-            path = Controller.startButton();
             return true;
         }
     }
     FileHelper{
         id:_fileHelper
+    }
+    Recorder{
+        id:_recorder
     }
 
 }
