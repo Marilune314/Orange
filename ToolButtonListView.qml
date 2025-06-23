@@ -5,7 +5,7 @@ import QtQuick.Controls
 ColumnLayout{
     property alias startButton:_start
     property alias stopButton:_stop
-    property alias exitButton:_exit
+    property alias resumeButton:_resume
     property alias pauseButton:_pause
 
     Label{
@@ -25,6 +25,12 @@ ColumnLayout{
         Layout.fillHeight:true
         text:"Pause Recording"
     }
+    Button{
+        id:_resume
+        Layout.fillWidth:true
+        Layout.fillHeight:true
+        text:"Resume"
+    }
 
     Button{
         id:_stop
@@ -32,11 +38,6 @@ ColumnLayout{
         Layout.fillHeight:true
         text:"Stop Recording"
     }
-    Button{
-        id:_exit
-        Layout.fillWidth:true
-        Layout.fillHeight:true
-        text:"Exit"
-        onClicked: Qt.exit(0)
-    }
+
+
 }
