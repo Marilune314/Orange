@@ -5,7 +5,7 @@ Recorder::Recorder(QObject *parent) : QObject(parent), m_process(nullptr), m_par
 void Recorder::startRecording(QString id)
 {
     m_process = new QProcess(this);
-    QString filename = QString("/root/part_60_%1.mkv").arg(m_partIndex++);
+    QString filename = QString("part%1.mp4").arg(m_partIndex++);
     m_parts << filename;
     qDebug() << filename;
 
@@ -41,23 +41,24 @@ void Recorder::resumeRecording(QString id)
 void Recorder::stopRecording(const QString &finalPath)
 {
     pauseRecording();
+    QProcess mergeProcess;
 
+    qDebug() << "m_partIndex" << m_partIndex;
     // 拼接命令：生成 file.txt
-    if (m_partIndex != 1) {
+    if (m_partIndex > 1) {
         QFile file("file.txt");
         if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
             QTextStream out(&file);
             for (const QString &part : m_parts)
                 out << "file '" << part << "'\n";
+            // }
+            mergeProcess.start("ffmpeg", {"-f", "concat", "-safe", "0", "-i", "file.txt", "-c", "copy", finalPath});
+            qDebug() << "拼接完成";
         }
-
-        QProcess mergeProcess;
-        mergeProcess.start("ffmpeg", {"-f", "concat", "-safe", "0", "-i", "file.txt", "-c", "copy", finalPath});
-        qDebug() << "拼接完成";
-        // if (QFile::remove("file.txt") == 0) qDebug() << "file.txt remove successfully!";
-        // for (int i = 0; i < m_partIndex; i++) {
-        //     if (QFile::remove("file.txt") == 0) qDebug() << "file.txt remove successfully!";
-        // }
-        mergeProcess.waitForFinished();
+    } else {
+        mergeProcess.start("ffmpeg", {"-i", "part0.mp4", "-c", "copy", finalPath});
+        qDebug() << "只有一个 重命名成功";
     }
+    m_partIndex = 0;
+    mergeProcess.waitForFinished();
 }
