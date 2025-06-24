@@ -8,12 +8,20 @@ Item {
     property alias remove: _remove
     property alias screenCapture:_screenCapture
     property alias windowCapture:_windowCapture
-
+    property alias exit:_exit
 
     Action{
         id:_show
         icon.name: "media-playback-start"
         text:"Play(existing files)"
+    }
+    Action{
+        id:_exit
+        //icon.name: "media-playback-start"//find it tomorrow
+        text:"exit"
+        icon.name:"application-exit"
+        shortcut:StandardKey.Quit
+        onTriggered: Qt.quit()
     }
     Action{
         id:_about

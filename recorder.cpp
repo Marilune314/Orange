@@ -44,6 +44,12 @@ void Recorder::stopRecording(const QString &finalPath)
     pauseRecording();
     QProcess mergeProcess;
     qDebug() << "m_partIndex" << m_partIndex;
+    QString mOutput = finalPath;
+    bool isGif = finalPath.endsWith(".gif", Qt::CaseInsensitive);
+    if (isGif) {
+        mOutput = finalPath.left(finalPath.lastIndexOf(".")) + ".mp4"; //last:最后一次出现
+    }
+
     if (m_partIndex > 1) {
         QFile file("file.txt");
         if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -51,7 +57,7 @@ void Recorder::stopRecording(const QString &finalPath)
             for (const QString &part : m_parts)
                 out << "file '" << part << "'\n";
 
-            mergeProcess.start("ffmpeg", {"-f", "concat", "-safe", "0", "-i", "file.txt", "-c", "copy", finalPath});
+            mergeProcess.start("ffmpeg", {"-f", "concat", "-safe", "0", "-i", "file.txt", "-c", "copy", mOutput});
             qDebug() << "拼接完成";
         }
     } else {
@@ -61,7 +67,14 @@ void Recorder::stopRecording(const QString &finalPath)
 
     mergeProcess.waitForFinished();
 
-    if (QFile::remove("/root/file.txt") != 0) qDebug() << "file.txt remove successfully!";
+    if (isGif) {
+        QProcess convertProcess;
+        convertProcess.start("ffmpeg", {"-i", mOutput, "-q:v", "5", finalPath});
+        convertProcess.waitForFinished();
+        qDebug() << "convert gif succ";
+    }
+
+    if (QFile::remove("file.txt") != 0) qDebug() << "file.txt remove successfully!";
     for (int i = 0; i < m_partIndex; i++) {
         QString partFile = QString("part%1.mp4").arg(i);
         if (QFile::remove(partFile))
