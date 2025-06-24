@@ -85,6 +85,7 @@ ApplicationWindow{
         show.onTriggered: {
             content.dialogs.openDialog.open()
         }
+
     }
 
     Content{

@@ -23,9 +23,9 @@ ListView{
             TapHandler{
                 onTapped:{
                     _windowListView.currentIndex=index
-                    // 获取当前点击的窗口对象
+                   // 获得当前点击的窗口对象
                     window = _windowListView.model.getWindow(index);
-                    // 调用 Player 的预览方法
+                   // 调用Player 的预览方法
                     if (window.isValid) {
                         _player.startPreviewWindow(window);
                     }
