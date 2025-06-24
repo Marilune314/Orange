@@ -8,20 +8,21 @@ void Recorder::startRecording(QString id)
     QString filename = QString("/root/part%1.mp4").arg(m_partIndex++);
     m_parts << filename;
     qDebug() << filename;
-
+    //m_setVideoSize = getVideoSize();
     QStringList args;
     qDebug() << "recorder:" << id;
     if (id == "-1") {
         // args << "-y" << "-video_size" << "1920x1200" << "-framerate" << "300" << "-f" << "x11grab"
         //      << "-i" << ":0.0"
         //      << "-f" << "pulse" << "-i" << "default" << filename;
-
-        args << "-y" << "-video_size" << "1920x1200" << "-framerate" << "30" << "-f" << "x11grab"
+        qDebug() << "recorder.cpp:m_setVideoSize final=" << m_setVideoSize;
+        args << "-y" << "-video_size" << m_setVideoSize << "-framerate" << "30" << "-f" << "x11grab"
              << "-i" << ":0.0"
              << "-f" << "pulse" << "-i" << "default" << "-vcodec" << "mpeg4" << "-q:v" << "5"
              << filename;
     } else {
-        args << "-y" << "-f" << "x11grab" << "-window_id" << id << "-framerate" << "60" << "-i"
+        //qDebug() << "recorder.cpp:window: m_setVideoSize final=" << m_setVideoSize;
+        args << "-y" << "-f" << "x11grab" << "-window_id" << id << "-framerate" << "30" << "-i"
              << ":0.0"
 
              << "-f" << "pulse" << "-i" << "default" << "-vcodec" << "mpeg4" << "-q:v" << "5"
@@ -81,17 +82,28 @@ void Recorder::stopRecording(const QString &finalPath)
         convertProcess.start("ffmpeg",
                              {"-i",
                               mOutput,
-                              //"-ss", "00:00:01.000",  // 选裁剪开始时间
-                              //"-t",
-                              //"12", // 选持续时长
-                              //"-vf",
-                              //"scale=480:-1", // 缩放宽度为 480，高度按比例
-                              //"-r",
-                              //"15", // gif 帧率
                               "-q:v",
                               "5",
                               finalPath});
         convertProcess.waitForFinished();
         qDebug() << "convert gif succ";
     }
+}
+QString Recorder::getVideoSize()
+{
+    QProcess g;
+    g.start("bash", {"-c", "xrandr | grep '*' | awk '{print $1}'"});
+    if (!g.waitForFinished()) {
+        qWarning() << "get videoSize Failed";
+        return QString();
+    }
+    QString output = g.readAllStandardOutput();
+    return output.trimmed();
+}
+
+void Recorder::setVideoSize(
+    const QString &size)
+{
+    m_setVideoSize = size;
+    qDebug() << "recorder.cpp:m_setVieS" << m_setVideoSize;
 }

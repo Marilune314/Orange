@@ -7,6 +7,49 @@ ApplicationWindow{
     property string timeString: "00:00:00"
     property bool showFooterMessage: false
     property string outputFormat: "mp4"
+    property string userMaxVideoSize: ""
+    property string selected: ""
+    Component.onCompleted: {
+        userMaxVideoSize=content.recorder.getVideoSize()
+       // recorder.setVideoSize(selected)
+        selected = userMaxVideoSize
+        content.recorder.setVideoSize(selected)
+    }
+
+    property var allViedioSizes: [
+        "3840x2160",
+        "2560x1600",
+        "2560x1440",
+        "2048x1536",
+        "2048x1152",
+        "1920x1440",
+        "1920x1200",
+        "1920x1080",
+        "1680x1050",
+        "1600x1200",
+        "1600x900",
+        "1440x810",
+        "1400x1050",
+        "1400x900",
+        "1368x768",
+        "1280x1024",
+        "1280x960",
+        "1280x800",
+        "1280x720",
+        "1024x768",
+        "1024x576",
+        "960x720",
+        "960x600",
+        "800x600",
+        "640x360"
+    ]
+    property var videoSizeList: {
+        var idx = allViedioSizes.indexOf(userMaxVideoSize);
+        if (idx === -1) return [];
+
+        var end = Math.min(idx + 3, allViedioSizes.length);
+        return allViedioSizes.slice(idx, end);
+    }
     id:winodw
     width:640
     height:480
@@ -22,12 +65,24 @@ ApplicationWindow{
         Menu{
             id:settings
             title:qsTr("Settings")
-            // Menu{
-            //     id:videoSize
-            //     title:qsTr("Select Video-size")
-            //     MenuItem{text:qsTr()}
-            //     MenuItem{action:actions.exit}
-            // }
+            Menu{
+                id:videoSize
+                title:qsTr("Select Video-size")
+                Instantiator{
+                    model:videoSizeList
+                    delegate:MenuItem{
+                        text: modelData
+                                   onTriggered: {
+                                       console.log("set videoSize:", modelData)
+                                       selected = modelData
+                                       content.recorder.setVideoSize(selected)
+
+                                   }
+                               }
+                               onObjectAdded: (index, item) => videoSize.insertItem(index, item)
+                               onObjectRemoved: (index, item) => videoSize.removeItem(item)
+                           }
+                       }
             Menu{
                 id:outputType
                 title: qsTr("type")
@@ -35,7 +90,7 @@ ApplicationWindow{
                         id:mp4
                         text: "MP4/H.264 - Video "
                         checkable: true
-                        checked:gif.checked?false:true      // 默认勾选
+                        checked:gif.checked?false:true
                         onToggled: {
                             if (checked)
                                 winodw.outputFormat = "mp4"
@@ -46,7 +101,7 @@ ApplicationWindow{
                         id:gif
                         text: "GIF - Animated image "
                         checkable: true
-                        checked: mp4.checked?false:true      // 默认勾选
+                        checked: mp4.checked?false:true
                         onToggled: {
                             //console.log("GIF - Animated image :", checked)
                             if(checked)
