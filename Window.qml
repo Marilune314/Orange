@@ -6,7 +6,8 @@ ApplicationWindow{
     property int elapsedSeconds: 0
     property string timeString: "00:00:00"
     property bool showFooterMessage: false
-    id:winodw    
+    property string outputFormat: "mp4"
+    id:winodw
     width:640
     height:480
     visible:true
@@ -16,6 +17,44 @@ ApplicationWindow{
             id:file
             title:qsTr("File")
             MenuItem{action:actions.show}
+            MenuItem{action:actions.exit}
+        }
+        Menu{
+            id:settings
+            title:qsTr("Settings")
+            // Menu{
+            //     id:videoSize
+            //     title:qsTr("Select Video-size")
+            //     MenuItem{text:qsTr()}
+            //     MenuItem{action:actions.exit}
+            // }
+            Menu{
+                id:outputType
+                title: qsTr("type")
+                    MenuItem {
+                        id:mp4
+                        text: "MP4/H.264 - Video "
+                        checkable: true
+                        checked:gif.checked?false:true      // 默认勾选
+                        onToggled: {
+                            if (checked)
+                                winodw.outputFormat = "mp4"
+                            //console.log("MP4/H.264 - Video :", checked)
+                     }
+                    }
+                    MenuItem {
+                        id:gif
+                        text: "GIF - Animated image "
+                        checkable: true
+                        checked: mp4.checked?false:true      // 默认勾选
+                        onToggled: {
+                            //console.log("GIF - Animated image :", checked)
+                            if(checked)
+                                winodw.outputFormat="gif"
+                         }
+            }
+        }
+
         }
         Menu{
             id:help
@@ -105,6 +144,13 @@ ApplicationWindow{
             recording = false
             recordTimer.stop()
         }
+        toolButtonListView.pauseButton.onClicked: {
+            recordTimer.stop()
+        }
+        toolButtonListView.resumeButton.onClicked: {
+            recordTimer.start()
+        }
+
         dialogs.openDialog.onAccepted: {
             var path=content.dialogs.openDialog.selectedFile.toString().replace("file://","");
             console.log(path);
