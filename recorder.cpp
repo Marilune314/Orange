@@ -9,15 +9,19 @@ void Recorder::startRecording(QString id)
     QString filename = QString("part%1.mp4").arg(m_partIndex++);
     m_parts << filename;
     qDebug() << filename;
-    //ffmpeg -f x11grab -framerate 30 -video_size $(xdpyinfo | grep 'dimensions:' | awk '{print $2}') -i :0.0  -vf "hqdn3d=1.5:1.5:6:6"   /root/2560x1600.mp4
+    //m_setVideoSize = getVideoSize();
     QStringList args;
     qDebug() << "recorder:" << id;
     if (id == "-1") {
-        args << "-y" << "-video_size" << "1920x1200" << "-framerate" << "30" << "-f" << "x11grab" << "-i" << ":0.0"
-             << "-f" << "pulse" << "-i" << "default" << "-vcodec" << "mpeg4" << "-q:v" << "1" << filename;
+        qDebug() << "recorder.cpp:m_setVideoSize final=" << m_setVideoSize;
+        args << "-y" << "-video_size" << m_setVideoSize << "-framerate" << "30" << "-f" << "x11grab"
+             << "-i" << ":0.0"
+             << "-f" << "pulse" << "-i" << "default" << "-vcodec" << "mpeg4" << "-q:v" << "5"
+             << filename;
     } else {
-        args << "-y" << "-f" << "x11grab" << "-window_id" << id << "-framerate" << "60" << "-i" << ":0.0"
-
+        //qDebug() << "recorder.cpp:window: m_setVideoSize final=" << m_setVideoSize;
+        args << "-y" << "-f" << "x11grab" << "-window_id" << id << "-framerate" << "30" << "-i"
+             << ":0.0"
              << "-f" << "pulse" << "-i" << "default" << "-q:v" << "5" << filename;
     }
 
@@ -61,7 +65,7 @@ void Recorder::stopRecording(const QString &finalPath)
             qDebug() << "拼接完成";
         }
     } else {
-        mergeProcess.start("ffmpeg", {"-i", "part0.mp4", "-c", "copy", finalPath});
+        mergeProcess.start("ffmpeg", {"-i", "part0.mp4", "-c", "copy", mOutput});
         qDebug() << "只有一个 重命名成功";
     }
 
@@ -84,4 +88,22 @@ void Recorder::stopRecording(const QString &finalPath)
     }
 
     m_partIndex = 0;
+}
+QString Recorder::getVideoSize()
+{
+    QProcess g;
+    g.start("bash", {"-c", "xrandr | grep '*' | awk '{print $1}'"});
+    if (!g.waitForFinished()) {
+        qWarning() << "get videoSize Failed";
+        return QString();
+    }
+    QString output = g.readAllStandardOutput();
+    return output.trimmed();
+}
+
+void Recorder::setVideoSize(
+    const QString &size)
+{
+    m_setVideoSize = size;
+    qDebug() << "recorder.cpp:m_setVieS" << m_setVideoSize;
 }
