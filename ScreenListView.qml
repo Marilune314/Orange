@@ -19,9 +19,8 @@ ListView{
         }
         TapHandler{
             onTapped: {
-                var nativeScreen = _screenListView.model.screen(index)
                 var scrs = Application.screens
-                targetScreen = scrs.find(s => s.name === nativeScreen.name)
+                targetScreen=scrs[index]
                 if (targetScreen) {
                     _player.startPreviewScreen(targetScreen)
                 } else {

@@ -1,5 +1,7 @@
 #include "recorder.h"
 #include <QFile>
+#include <QtCore>
+#include <QFileInfo>
 Recorder::Recorder(QObject *parent) : QObject(parent), m_process(nullptr), m_partIndex(0) {}
 
 void Recorder::startRecording(QString id)
@@ -71,11 +73,17 @@ void Recorder::stopRecording(const QString &finalPath)
 
     mergeProcess.waitForFinished();
 
+
     if (isGif) {
         QProcess convertProcess;
         convertProcess.start("ffmpeg", {"-i", mOutput, "-q:v", "5", finalPath});
         convertProcess.waitForFinished();
+         convertProcess.close();
         qDebug() << "convert gif succ";
+        qDebug() << mOutput;
+        qDebug() << "File exists: " << QFile::exists(mOutput.replace("file://",""));
+        qDebug() << "Trying to remove file:" << QFileInfo(mOutput).absoluteFilePath();
+        if (QFile::remove(mOutput) != 0) qDebug() << mOutput+" remove successfully!";
     }
 
     if (QFile::remove("file.txt") != 0) qDebug() << "file.txt remove successfully!";

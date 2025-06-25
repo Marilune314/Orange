@@ -32,10 +32,6 @@ QHash<int, QByteArray> ScreenListModel::roleNames() const
     return {{Qt::DisplayRole, "display"}};
 }
 
-QScreen *ScreenListModel::screen(int index)
-{
-    return QGuiApplication::screens().at(index);
-}
 
 void ScreenListModel::screenChanged()
 {

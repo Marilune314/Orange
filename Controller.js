@@ -20,13 +20,26 @@ function getOutputPath(fileName) {
                 return dir+"/"+fileName
 }
 function stopButton(){
-    var format=".mp4";
-    if(winodw.outputFormat==="gif"){
-        format=".gif"
-    }
+    var path=""
 
-    var path=getOutputPath("Screen_Capture_" + Qt.formatDateTime(new Date(), "yyyyMMdd_hhmmss") + format);
+    switch(winodw.outputFormat){
+    case "mp4":
+        path=getOutputPath("Screen_Capture_" + Qt.formatDateTime(new Date(), "yyyyMMdd_hhmmss") + ".mp4");
+        break;
+    case "gif":
+        path=getOutputPath("Screen_Capture_" + Qt.formatDateTime(new Date(), "yyyyMMdd_hhmmss") + ".gif");
+        break;
+
+    }
     recorder.stopRecording(path);
     return path;
+
+    // var format=".mp4";
+    // if(winodw.outputFormat==="gif"){
+    //     format=".gif"
+    // }
+    // var path=getOutputPath("Screen_Capture_" + Qt.formatDateTime(new Date(), "yyyyMMdd_hhmmss") + format);
+    // recorder.stopRecording(path);
+    // return path;
 }
 

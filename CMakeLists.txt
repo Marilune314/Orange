@@ -31,7 +31,7 @@ qt_add_qml_module(appOrange
     SOURCES localplayer.h localplayer.cpp
     SOURCES filehelper.h filehelper.cpp
     SOURCES recorder.h recorder.cpp
-    RESOURCES windowId.txt
+    RESOURCES
 )
 
 target_compile_features(appOrange PRIVATE cxx_std_23)
@@ -49,6 +49,7 @@ set_target_properties(appOrange PROPERTIES
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
+# AUTORCC TRUE
 )
 
 include(GNUInstallDirs)
