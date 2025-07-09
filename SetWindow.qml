@@ -1,3 +1,6 @@
+// Written by WXR HJX YJY
+// date 2025-7-9
+// setwindow.qmlof the Screen Recorder application
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts

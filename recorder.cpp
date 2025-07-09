@@ -1,3 +1,6 @@
+// Written by WXR HJX YJY
+// date 2025-7-9
+// recorder.cpp of the Screen Recorder application
 #include "recorder.h"
 #include <QFile>
 #include <QtCore>

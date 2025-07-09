@@ -1,3 +1,6 @@
+// Written by WXR HJX YJY
+// date 2025-7-9
+// windowlistmodel.cpp of the Screen Recorder application
 #include "windowlistmodel.h"
 #include <QWindowCapture>
 #include <iostream>

@@ -1,3 +1,6 @@
+// Written by WXR HJX YJY
+// date 2025-7-9
+// Controller.js of the Screen Recorder application
 function showPreview(index) {
     if (index >= 0 && index <captureLists.length) {
         var item =captureLists[index]

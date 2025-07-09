@@ -1,3 +1,6 @@
+// Written by WXR HJX YJY
+// date 2025-7-9
+// windowListView.qml of the Screen Recorder application
 import QtQuick
 import QtQuick.Controls
 import Orange 1.0

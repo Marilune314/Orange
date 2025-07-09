@@ -1,3 +1,6 @@
+// Written by WXR HJX YJY
+// date 2025-7-9
+// localplayer.h of the Screen Recorder application
 #pragma once
 
 #include <QQmlEngine>

@@ -1,3 +1,6 @@
+// Written by WXR HJX YJY
+// date 2025-7-9
+// recorder.h of the Screen Recorder application
 #pragma once
 
 #include <QObject>

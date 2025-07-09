@@ -1,3 +1,6 @@
+// Written by WXR HJX YJY
+// date 2025-7-9
+//filehelper.cpp of the Screen Recorder application
 #include "filehelper.h"
 #include <QDir>
 

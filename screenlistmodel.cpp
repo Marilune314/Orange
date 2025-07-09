@@ -1,3 +1,6 @@
+// Written by WXR HJX YJY
+// date 2025-7-9
+// screenlistmodel.cpp of the Screen Recorder application
 #include "screenlistmodel.h"
 #include <QGuiApplication>
 #include <QTextStream>
